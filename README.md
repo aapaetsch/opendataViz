@@ -8,3 +8,6 @@ visualization of opencity data
 - Shards (npm install shards-react)
 - Ant Design (npm install antd)
 
+<h2> mapping stuff </h2>
+
+- react-map-gl (npm install --save react-map-gl)
