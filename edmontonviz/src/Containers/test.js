@@ -1,17 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Taiwan from "@svg-maps/taiwan";
-import { SVGMap } from "react-svg-map";
-import "react-svg-map/lib/index.css";
- 
-class App extends React.Component {
+import { Component } from "react";
+
+
+export default class test extends Component {
   constructor(props) {
     super(props);
   }
- 
-  render() {
-    return <SVGMap map={Taiwan} />;
+
+  render(e) {
+      return(
+          <div>
+          <p>
+          this is a test
+          </p>
+          </div>
+      );
+
   }
 }
- 
-ReactDOM.render(<App />, document.getElementById("app"));
