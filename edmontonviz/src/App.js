@@ -12,12 +12,11 @@ class App extends Component{
             showTest: false
         }
     }
-    setShow(home){
-        if (home === false){
-            this.setState({showTest: true});
-        }else if (home === true){
-            this.setState({showTest: false});
-        }
+    showHome = () => {
+        this.setState({showTest: false});
+    }
+    showTest(){
+        this.setState({showTest: true});
     }
 
     render(e){
@@ -30,14 +29,14 @@ class App extends Component{
                             <Button> Edmonton Bus Locations </Button>
                             <Button> Edmonton Properties </Button>
                             <Button> Edmonton Trees </Button>
-                            <Button onClick={()=>{this.setShow(false)}}> Map Testing </Button>
+                            <Button onClick={()=>{this.showTest()}}> Map Testing </Button>
                         </div>
                     </header>
                 </div>
                 );
         }else{
             return(
-                <Test goHome={this.setShow} />
+                <Test goHome={this.showHome} />
             );
         }
 

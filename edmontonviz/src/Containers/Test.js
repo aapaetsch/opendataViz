@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Component } from "react";
 import { Button } from "antd";
-
+import "./test.css";
 
 class Test extends Component {
     constructor(props){
@@ -13,7 +13,7 @@ class Test extends Component {
     render() {
         return(
             <div>
-                <Button onClick={()=>{this.props.goHome(true)}}> GO HOME</Button>
+                <Button className="lol" onClick={()=>{this.props.goHome()}}> GO HOME</Button>
                 <p>
                     this is a test
                 </p>
