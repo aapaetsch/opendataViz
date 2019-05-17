@@ -2,7 +2,10 @@ import React from 'react';
 import { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Button } from 'antd';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "shards-ui/dist/css/shards.min.css";
+// import { Button } from 'antd';
+import { Button } from 'shards-react';
 import Test from "./Containers/Test"
 
 class App extends Component{
@@ -26,7 +29,7 @@ class App extends Component{
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo" />
                         <div>
-                            <Button> Edmonton Bus Locations </Button>
+                            <Button pill type='secondary' > Edmonton Bus Locations </Button>
                             <Button> Edmonton Properties </Button>
                             <Button> Edmonton Trees </Button>
                             <Button onClick={()=>{this.showTest()}}> Map Testing </Button>
