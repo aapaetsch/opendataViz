@@ -2,11 +2,15 @@ import React from 'react';
 import { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "shards-ui/dist/css/shards.min.css";
-// import { Button } from 'antd';
-import { Button } from 'shards-react';
-import Test from "./Containers/Test"
+// import "bootstrap/dist/css/bootstrap.min.css"; this is needed for shards?
+// import "shards-ui/dist/css/shards.min.css"; this is needed for shards?
+import { Menu, Icon, Button } from 'antd';
+import Test from "./Containers/Test";
+import 'antd/dist/antd.css';
+
+
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 class App extends Component{
     constructor(props){
@@ -21,29 +25,50 @@ class App extends Component{
     showTest(){
         this.setState({showTest: true});
     }
+    handleClick = e => {
+        console.log('click ', e);
+    };
+    // this is for an example of a sub item group
+    edviz = (<SubMenu key="viz1" title={
+                            <span>
+                            <Icon type="area-chart" />
+                            <span>Edmonton Visulizations</span>
+                            </span>
+                        }>
+                        <Menu.Item onClick={()=>{this.showTest()}}>Test</Menu.Item>
+            </SubMenu>
+             );
+    homeButton = (<Menu.Item ></Menu.Item>);
+
 
     render(e){
-        if (this.state.showTest === false){
-            return (
+        let bodyContent;
+       if (this.state.showTest === true){
+           bodyContent = <Test goHome={this.showHome}/>;
+       }else{
+           bodyContent = <img src={logo} className="App-logo" alt="logo" />;
+       }
+        return(
                 <div className="App">
+
                     <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <div>
-                            <Button pill type='secondary' > Edmonton Bus Locations </Button>
-                            <Button> Edmonton Properties </Button>
-                            <Button> Edmonton Trees </Button>
-                            <Button onClick={()=>{this.showTest()}}> Map Testing </Button>
-                        </div>
+                    <Menu
+                        onClick={this.handleClick}
+                        style={{ width: 256 }}
+                        defaultSelectedKeys={['1']}
+                        defaultOpenKeys={['sub1']}
+                        mode="horizontal"
+                        theme="dark"
+                    >{this.homeButton}{this.edviz}
+                    </Menu>
                     </header>
+                    <body className="App-body">
+                        {bodyContent}
+                    </body>
                 </div>
-                );
-        }else{
-            return(
-                <Test goHome={this.showHome} />
             );
         }
-
     }
-}
+
 
 export default App;
