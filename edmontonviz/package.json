@@ -9,6 +9,7 @@
     "react-dom": "^16.8.6",
     "react-map-gl": "^4.1.2",
     "react-scripts": "3.0.1",
+    "react-sticky": "^6.0.3",
     "shards-react": "^1.0.3"
   },
   "scripts": {
