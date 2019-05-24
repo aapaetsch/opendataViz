@@ -5,9 +5,11 @@
   "dependencies": {
     "antd": "^3.18.1",
     "google-map-react": "^1.1.4",
+    "mapbox-gl": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-map-gl": "^4.1.2",
+    "react-mapbox-gl": "^4.4.0",
     "react-scripts": "3.0.1",
     "react-sticky": "^6.0.3",
     "shards-react": "^1.0.3"
