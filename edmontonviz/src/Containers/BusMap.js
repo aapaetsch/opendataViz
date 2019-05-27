@@ -12,7 +12,7 @@ class BusMap extends Component{
     constructor(props){
         super(props);
         this.state = {
-            center:[-113.5054,53.5372],
+
         };
     }
 
@@ -21,8 +21,8 @@ class BusMap extends Component{
         <div>
         <Map
             style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
-            containerStyle={{width: '90vw', height: '45vw'}}
-            center={this.state.center}
+            containerStyle={{ width: '85vw', height: '80vh'}}
+            center={this.props.center}
            >
         </Map>
         </div>
