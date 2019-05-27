@@ -4,11 +4,11 @@ import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";// this is needed for shards?
 import "shards-ui/dist/css/shards.min.css"; //this is needed for shards?
-import { Menu, Icon, Button, Layout, Breadcrumb, Checkbox } from 'antd';
+import { Menu, Icon, Button, Layout, Checkbox } from 'antd';
 import Test from "./Containers/Test";
 import BusMap from "./Containers/BusMap";
-import BusMenu from "./Components/busMenu";
-
+import SideMenu from "./Components/SideMenu";
+import TopMenu from "./Components/TopMenu";
 import 'antd/dist/antd.css';
 
 
@@ -19,8 +19,10 @@ const MenuItemGroup = Menu.ItemGroup;
 class App extends Component{
     constructor(props){
         super(props);
+        this.sidemenu = React.createRef();
+		this.topmenu = React.createRef();
         this.state = {
-            center:[-113.5054,53.5372],
+            edmontonCenter:[-113.5054,53.5372],
             showTest: false,
 			showHome: true,
             showBus: false,
@@ -41,20 +43,6 @@ class App extends Component{
     onChange(e){
         console.log('checked = ${e.target.checked}');
     }
-
-    // this is for an example of a sub item group
-    busviz = (<SubMenu key="viz1" title={
-                            <span>
-                            <Icon type="pie-chart" />
-                            <span>Edmonton Visulizations</span>
-                            </span>}>
-                        <MenuItemGroup title='Bus Map Page'>
-						    <Menu.Item onClick={()=>{this.showBus()}}><Icon type="global"/> Bus Map </Menu.Item>
-                        </MenuItemGroup>
-            </SubMenu>
-             );
-
-    homeButton = (<Menu.Item onClick={()=>{this.showHome()}}><span> <Icon type="home" /> Home </span></Menu.Item>);
     logo = (
         <div className='logoStyle'>
             <img src={logo} className="App-logo" alt="logo" />
@@ -68,7 +56,7 @@ class App extends Component{
       		if (this.state.showTest === true){
            		bodyContent = <Test goHome={this.showHome}/>;
        		} else if (this.state.showBus === true){
-                   bodyContent = <BusMap center={this.state.center}/>
+                   bodyContent = <BusMap center={this.state.edmontonCenter}/>
                }
 		}else{
            	bodyContent = this.logo;
@@ -76,19 +64,18 @@ class App extends Component{
         return(
                 <Layout>
                     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-                        <div className='logo'/>
-                            <Menu
-                                onClick={this.handleClick}
-                        	    mode="horizontal"
-                        	    theme="dark">
-                                {this.homeButton}
-                                {this.busviz}
-                    	    </Menu>
-
+                        <TopMenu ref={this.topmenu}
+							showHome={this.showHome}
+							showBus={this.showBus}
+							showTest={this.showTest}
+                                />
                     </Header>
                     <Layout>
                         <Sider>
-                            <BusMenu/>
+                            <SideMenu ref={this.sidemenu}
+                                     showHome={this.state.showHome}
+                                     showBus={this.state.showBus}
+                                     showTest={this.state.showTest} />
                         </Sider>
                     <Content style={{background: '#282c34',padding: 60, margin: 0, minHeight: '100vh',}}>
                         {bodyContent}
@@ -98,6 +85,4 @@ class App extends Component{
             );
         }
     }
-
-
 export default App;
