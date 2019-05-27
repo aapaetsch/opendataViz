@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";// this is needed for shards?
 import "shards-ui/dist/css/shards.min.css"; //this is needed for shards?
-import { Menu, Icon, Button, Layout, Checkbox } from 'antd';
+import { Menu, Layout } from 'antd';
 import Test from "./Containers/Test";
 import BusMap from "./Containers/BusMap";
 import SideMenu from "./Components/SideMenu";
@@ -12,9 +12,7 @@ import TopMenu from "./Components/TopMenu";
 import 'antd/dist/antd.css';
 
 
-const SubMenu = Menu.SubMenu;
 const {Header, Content, Sider} = Layout;
-const MenuItemGroup = Menu.ItemGroup;
 
 class App extends Component{
     constructor(props){
@@ -30,11 +28,15 @@ class App extends Component{
     }
     showHome = () => {
         this.setState({showTest: false, showHome: true, showBus: false});
+        console.log('CLICK HOME')
+        console.log('showHome',this.state.showTest)
     }
-    showTest(){
+    showTest = () => {
         this.setState({showTest: true, showHome: false, showBus: false});
+        console.log('CLICK test')
+        console.log('show test',this.state.showTest)
     }
-    showBus(){
+    showBus = () => {
         this.setState({showTest: false, showHome: false, showBus: true});
     }
     handleClick = e => {
@@ -49,6 +51,7 @@ class App extends Component{
         </div>
     );
 
+
     render(e){
         let bodyContent;
         let sideMenu;
@@ -58,12 +61,13 @@ class App extends Component{
        		} else if (this.state.showBus === true){
                    bodyContent = <BusMap center={this.state.edmontonCenter}/>
                }
-		}else{
+		}else if (this.state.showHome === true){
            	bodyContent = this.logo;
        	}
         return(
                 <Layout>
-                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: '0px',
+                                     background:'#282c34', height:0}}>
                         <TopMenu ref={this.topmenu}
 							showHome={this.showHome}
 							showBus={this.showBus}
@@ -71,14 +75,15 @@ class App extends Component{
                                 />
                     </Header>
                     <Layout>
-                        <Sider>
-                            <SideMenu ref={this.sidemenu}
-                                     showHome={this.state.showHome}
-                                     showBus={this.state.showBus}
-                                     showTest={this.state.showTest} />
+                        <Sider className='sm'>
+                            <SideMenu
+                                ref={this.sidemenu}
+                                home={this.state.showHome}
+                                bus={this.state.showBus}
+                                test={this.state.showTest} />
                         </Sider>
-                    <Content style={{background: '#282c34',padding: 60, margin: 0, minHeight: '100vh',}}>
-                        {bodyContent}
+                    <Content style={{background: '#282c34',padding: "15px", margin: "45px 0 0 0", minHeight: '100vh',}}>
+                            {bodyContent}
                     </Content>
                     </Layout>
                 </Layout>

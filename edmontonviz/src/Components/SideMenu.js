@@ -11,6 +11,8 @@ class SideMenu extends Component{
     menuKeys =  ["busfxn"];
     state={
             openKeys:[],
+            checkedBoxes:[],
+
         };
     onOpenChange = openKeys =>{
         const lastOpenKey = openKeys.find(key => openKeys.indexOf(key) ===-1);
@@ -23,23 +25,30 @@ class SideMenu extends Component{
     onChange(e){
         console.log('checked = ${e.target.checked}');
     }
-
     render(){
         return (
             <Menu
-                mode="vertical"
+                mode="inline"
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}
                 theme="dark">
-                <Menu.Item/>
-                <SM key="busfxn" disabled={!this.props.showBus}
-                    title={<span><Icon type='apple'/><span>Bus Functions</span></span>}>
+                <SM key="busfxn" disabled={!this.props.bus}
+                    title={<span><Icon type='car'/><span>Bus Functions</span></span>}>
                     <MIG title={<span><Icon type="filter"/>Filters</span>}>
                         <Menu.Item key='F1'>
                             <Checkbox onChange={this.onChange}/>
-                            <span>
-                            Some function to the Bus Map
-                            </span>
+                            <span>Some function to the Bus Map</span>
+                        </Menu.Item>
+                    </MIG>
+                </SM>
+                <SM key='testfxn' disabled={!this.props.test}
+                    title={<span><Icon type='experiment'/>Tests</span>}>
+                    <MIG title={<span><Icon type='control'/>Test Buttons</span>}>
+                        <Menu.Item key='T1' disabled>
+                            <Checkbox onChange={this.onChange}/>
+                            <span>Test Checkbox</span>
+                        </Menu.Item><Menu.Item key='T2'>
+                            <span>Test Button</span>
                         </Menu.Item>
                     </MIG>
                 </SM>

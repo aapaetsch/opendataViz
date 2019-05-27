@@ -1,13 +1,13 @@
-import React, {Componenet} from 'react';
-import { Menu, Icon, Button, Layout, Checkbox } from 'andt';
+import React, { Component } from 'react';
+import { Menu, Icon, Button, Layout, Checkbox } from 'antd';
 
-const MIG = Menu.ItemGroup;
-const SN = Menu.SubMenu;
-class TopMenu extends component{
+const MenuItemGroup = Menu.ItemGroup;
+const SubMenu = Menu.SubMenu;
+class TopMenu extends Component{
     constructor(props){
         super(props);
     }
-    homeButton = (  <Menu.Item onClick={()=>{this.props.showHome()}}>
+    homeButton = (  <Menu.Item style={{width:200}} onClick={()=>{this.props.showHome()}}>
                         <span>
                             <Icon type="home" />
                             Home
