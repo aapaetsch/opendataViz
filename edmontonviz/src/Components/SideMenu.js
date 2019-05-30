@@ -10,7 +10,7 @@ class SideMenu extends Component{
     }
     menuKeys =  ["busfxn"];
     state={
-            openKeys:[],
+            openKeys: [],
             checkedBoxes:[],
 
         };
@@ -24,6 +24,9 @@ class SideMenu extends Component{
     }
     onChange(e){
         console.log('checked = ${e.target.checked}');
+    }
+    emptyList(){
+        this.state.openKeys = [];
     }
     render(){
         return (
@@ -44,7 +47,7 @@ class SideMenu extends Component{
                 <SM key='testfxn' disabled={!this.props.test}
                     title={<span><Icon type='experiment'/>Tests</span>}>
                     <MIG title={<span><Icon type='control'/>Test Buttons</span>}>
-                        <Menu.Item key='T1' disabled>
+                        <Menu.Item key='T1' >
                             <Checkbox onChange={this.onChange}/>
                             <span>Test Checkbox</span>
                         </Menu.Item><Menu.Item key='T2'>

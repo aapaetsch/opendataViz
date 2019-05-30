@@ -7,6 +7,7 @@ class TopMenu extends Component{
     constructor(props){
         super(props);
     }
+
     homeButton = (  <Menu.Item style={{width:200}} onClick={()=>{this.props.showHome()}}>
                         <span>
                             <Icon type="home" />

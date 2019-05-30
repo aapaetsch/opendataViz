@@ -30,6 +30,7 @@ class App extends Component{
         this.setState({showTest: false, showHome: true, showBus: false});
         console.log('CLICK HOME')
         console.log('showHome',this.state.showTest)
+
     }
     showTest = () => {
         this.setState({showTest: true, showHome: false, showBus: false});
@@ -50,11 +51,14 @@ class App extends Component{
             <img src={logo} className="App-logo" alt="logo" />
         </div>
     );
+    emptyList = () => {
+        this.SideMenu.emptyList();
+    }
 
 
     render(e){
         let bodyContent;
-        let sideMenu;
+
 		if (this.state.showHome === false){
       		if (this.state.showTest === true){
            		bodyContent = <Test goHome={this.showHome}/>;
@@ -80,7 +84,9 @@ class App extends Component{
                                 ref={this.sidemenu}
                                 home={this.state.showHome}
                                 bus={this.state.showBus}
-                                test={this.state.showTest} />
+                                test={this.state.showTest}
+                                openKeys={this.state.openKeys}
+                                />
                         </Sider>
                     <Content style={{background: '#282c34',padding: "15px", margin: "45px 0 0 0", minHeight: '100vh',}}>
                             {bodyContent}
