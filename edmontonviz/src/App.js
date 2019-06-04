@@ -17,43 +17,56 @@ const {Header, Content, Sider} = Layout;
 class App extends Component{
     constructor(props){
         super(props);
-        this.sidemenu = React.createRef();
-		this.topmenu = React.createRef();
         this.state = {
             edmontonCenter:[-113.5054,53.5372],
             showTest: false,
 			showHome: true,
             showBus: false,
+            openKeys: [],
+            checkedBoxes: [],
         }
     }
+    menuKeys =  [];
+
     showHome = () => {
         this.setState({showTest: false, showHome: true, showBus: false});
-        console.log('CLICK HOME')
-        console.log('showHome',this.state.showTest)
-
+        this.clearKeys();
     }
     showTest = () => {
         this.setState({showTest: true, showHome: false, showBus: false});
-        console.log('CLICK test')
-        console.log('show test',this.state.showTest)
+        this.clearKeys();
     }
     showBus = () => {
         this.setState({showTest: false, showHome: false, showBus: true});
+        this.clearKeys();
     }
+    clearKeys(){
+        this.setState({openKeys: []});
+    }
+    onOpenChange = openKeys => {
+        const lastOpenKey = openKeys.find(key => openKeys.indexOf(key) === -1);
+        if (this.menuKeys.indexOf(lastOpenKey) === -1){
+            this.setState({openKeys});
+        } else {
+            this.setState({openKeys: lastOpenKey ? [lastOpenKey] : [], })
+        }
+    }
+
     handleClick = e => {
         console.log('click ', e);
     };
     onChange(e){
         console.log('checked = ${e.target.checked}');
     }
+
+
+
     logo = (
         <div className='logoStyle'>
             <img src={logo} className="App-logo" alt="logo" />
         </div>
     );
-    emptyList = () => {
-        this.SideMenu.emptyList();
-    }
+
 
 
     render(e){
@@ -86,6 +99,7 @@ class App extends Component{
                                 bus={this.state.showBus}
                                 test={this.state.showTest}
                                 openKeys={this.state.openKeys}
+                                onOpenChange={this.onOpenChange}
                                 />
                         </Sider>
                     <Content style={{background: '#282c34',padding: "15px", margin: "45px 0 0 0", minHeight: '100vh',}}>

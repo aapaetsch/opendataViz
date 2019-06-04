@@ -9,31 +9,31 @@ class SideMenu extends Component{
         super(props);
     }
     menuKeys =  ["busfxn"];
-    state={
-            openKeys: [],
-            checkedBoxes:[],
+    // state={
+    //         openKeys: [],
+    //         checkedBoxes:[],
 
-        };
-    onOpenChange = openKeys =>{
-        const lastOpenKey = openKeys.find(key => openKeys.indexOf(key) ===-1);
-        if (this.menuKeys.indexOf(lastOpenKey) === -1){
-            this.setState({ openKeys});
-        } else {
-            this.setState({openKeys: lastOpenKey ? [lastOpenKey] : [],})
-        }
-    }
+    //     };
+    // onOpenChange = openKeys =>{
+    //     const lastOpenKey = openKeys.find(key => openKeys.indexOf(key) ===-1);
+    //     if (this.menuKeys.indexOf(lastOpenKey) === -1){
+    //         this.setState({ openKeys});
+    //     } else {
+    //         this.setState({openKeys: lastOpenKey ? [lastOpenKey] : [],})
+    //     }
+    // }
     onChange(e){
         console.log('checked = ${e.target.checked}');
     }
-    emptyList(){
-        this.state.openKeys = [];
-    }
+    // emptyList(){
+    //     this.state.openKeys = [];
+    // }
     render(){
         return (
             <Menu
                 mode="inline"
-                openKeys={this.state.openKeys}
-                onOpenChange={this.onOpenChange}
+                openKeys={this.props.openKeys}
+                onOpenChange={this.props.onOpenChange}
                 theme="dark">
                 <SM key="busfxn" disabled={!this.props.bus}
                     title={<span><Icon type='car'/><span>Bus Functions</span></span>}>
