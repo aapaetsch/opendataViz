@@ -2,23 +2,53 @@ import React from "react";
 import { Component } from "react";
 import { Button } from "antd";
 import "./test.css";
+import "gtfs-realtime-bindings";
+import "gtfs-rt-bindings";
+
+const gtfsrealtime = require('gtfs-realtime-bindings');
+const request = require('request');
+
+const requestSettings = {
+    method: 'GET',
+    url: 'https://cors-anywhere.herokuapp.com/https://data.edmonton.ca/download/7qed-k2fc/application%2Foctet-stream',
+    encoding: null,
+    header:'access-control-allow-origin'
+
+};
+
 
 class Test extends Component {
     constructor(props){
         super(props);
         this.state = {
-            BUS: {},
+            busState: {},
         }
     }
-    getContent(URL){
-        fetch(URL).then(response => this.setState({BUS: response}));
-        console.log(this.state.BUS);
+    getContent(){
+        request(requestSettings, function(error, response, body){
+            if (!error && response.statusCode === 200){
+                var feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
+
+                console.log(feed);
+
+            }
+        });
+        // fetch(URL).then(response => this.setState({BUS: response}));
+        // console.log(this.state.BUS);
     }
+    // getRoutes(){
+    //     fetch(URL)
+    //         .then(response => )
+    // }
+
     render() {
         return(
             <div>
-                <Button className="lol" onClick={()=>{this.getContent('https://data.edmonton.ca/api/views/uzpc-8bnm/files/4785ba37-9862-4d26-844f-9aa2dc1c246d?filename=TripUpdates.pb')}}> GO HOME</Button>
-
+                <ul><li>
+                    <Button className="lol" type='primary' shape='round' onClick={()=>{this.getContent()}}>GET GTFS</Button>
+                </li><li>
+                    <Button type='primary' shape='round' ></Button>
+                </li></ul>
             </div>
         );
     }
