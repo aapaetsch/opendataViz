@@ -8,7 +8,7 @@ class TopMenu extends Component{
         super(props);
     }
 
-    homeButton = (  <Menu.Item style={{width:200}} onClick={()=>{this.props.showHome()}}>
+    homeButton = (  <Menu.Item style={{width:215}} onClick={()=>{this.props.showHome()}}>
                         <span>
                             <Icon type="home" />
                             Home
@@ -18,7 +18,7 @@ class TopMenu extends Component{
                     <span>
                         <Icon type="pie-chart" />
                         <span>Edmonton Visulizations</span>
-                    </span>}>
+                    </span>} placement='bottomleft'>
                     <MenuItemGroup title='Bus Map Page'>
 						<Menu.Item onClick={()=>{this.props.showBus()}}>
                             <Icon type="global"/> Bus Map

@@ -4,13 +4,12 @@ import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";// this is needed for shards?
 import "shards-ui/dist/css/shards.min.css"; //this is needed for shards?
-import { Menu, Layout } from 'antd';
+import { Layout } from 'antd';
 import Test from "./Containers/Test";
 import BusMap from "./Containers/BusMap";
 import SideMenu from "./Components/SideMenu";
 import TopMenu from "./Components/TopMenu";
 import 'antd/dist/antd.css';
-
 
 const {Header, Content, Sider} = Layout;
 
@@ -32,17 +31,21 @@ class App extends Component{
         this.setState({showTest: false, showHome: true, showBus: false});
         this.clearKeys();
     }
+
     showTest = () => {
         this.setState({showTest: true, showHome: false, showBus: false});
         this.clearKeys();
     }
+
     showBus = () => {
         this.setState({showTest: false, showHome: false, showBus: true});
         this.clearKeys();
     }
+
     clearKeys(){
         this.setState({openKeys: []});
     }
+
     onOpenChange = openKeys => {
         const lastOpenKey = openKeys.find(key => openKeys.indexOf(key) === -1);
         if (this.menuKeys.indexOf(lastOpenKey) === -1){
@@ -55,19 +58,16 @@ class App extends Component{
     handleClick = e => {
         console.log('click ', e);
     };
+
     onChange(e){
         console.log('checked = ${e.target.checked}');
     }
-
-
 
     logo = (
         <div className='logoStyle'>
             <img src={logo} className="App-logo" alt="logo" />
         </div>
     );
-
-
 
     render(e){
         let bodyContent;
