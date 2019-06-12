@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button } from "shards-react";
 import ReactDOM from 'react-dom';
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
 import { Icon } from 'antd';
 
 const Map = ReactMapboxGl({
@@ -77,12 +77,23 @@ class BusMap extends Component{
     }
 
     render() {
+        const mapMarker = state => {
+                const markers = state.busState.map((entity, index)=>{
+                    return(
+                        <Marker anchor="bottom" latitude={entity.vehicle.position.latitude} longitude={entity.vehicle.position.longitude}>
+                        <Icon type="rocket"/>
+                        </Marker>
+                    )
+                })
+                return <mMarker>{markers}</mMarker>
+        }
         return (
             <div>
                 <Map
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
                     center={this.props.center}>
+                    <Marker coordinates={[-113.5054,53.5372]}><Icon type='rocket'/></Marker>
                 </Map>
             </div>
     );
