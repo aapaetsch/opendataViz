@@ -27,6 +27,12 @@ class SideMenu extends Component{
                             <span>Test Button</span>
                         </Menu.Item>
                     </MIG>);
+    houseMenu =(<MIG title={<span><Icon type="home"/>Home Buttons</span>}>
+                    <Menu.Item key='H1'>
+                        <span>Test House</span>
+                    </Menu.Item>
+                </MIG>
+    );
     render(){
         return (
             <Menu
@@ -37,6 +43,10 @@ class SideMenu extends Component{
                 <SM key="busfxn" disabled={!this.props.bus}
                     title={<span><Icon type='car'/><span>Bus Functions</span></span>}>
                     {this.busFiltersMenu}
+                </SM>
+                <SM key="housefxn" disabled={!this.props.housing}
+                    title={<span><Icon type='home'/><span>House Map Functions</span></span>}>
+                    {this.houseMenu}
                 </SM>
                 <SM key='testfxn' disabled={!this.props.test}
                     title={<span><Icon type='experiment'/>Tests</span>}>

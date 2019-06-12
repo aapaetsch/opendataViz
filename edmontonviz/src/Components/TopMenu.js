@@ -8,24 +8,29 @@ class TopMenu extends Component{
         super(props);
     }
 
-    homeButton = (  <Menu.Item style={{width:215}} onClick={()=>{this.props.showHome()}}>
+    homeButton = (  <Menu.Item style={{width:215}} onClick={()=>{this.props.showPage('Home')}}>
                         <span>
                             <Icon type="home" />
                             Home
                         </span>
                     </Menu.Item>);
-    busviz = (  <SubMenu key="viz1" title={
+    edmviz = (  <SubMenu key="viz1" title={
                     <span>
                         <Icon type="pie-chart" />
                         <span>Edmonton Visulizations</span>
                     </span>} placement='bottomleft'>
                     <MenuItemGroup title='Bus Map Page'>
-						<Menu.Item onClick={()=>{this.props.showBus()}}>
+						<Menu.Item onClick={()=>{this.props.showPage('Bus')}}>
                             <Icon type="global"/> Bus Map
                         </Menu.Item>
                     </MenuItemGroup>
+                    <MenuItemGroup title='Housing Map Page'>
+                        <Menu.Item onClick={()=>{this.props.showPage('House')}}>
+                            <Icon type="home"/>House Map
+                        </Menu.Item>
+                    </MenuItemGroup>
                     <MenuItemGroup title='Testing'>
-                        <Menu.Item onClick={()=>{this.props.showTest()}}>
+                        <Menu.Item onClick={()=>{this.props.showPage('Test')}}>
                             <Icon type='loading'/>Test
                         </Menu.Item>
                     </MenuItemGroup>
@@ -39,7 +44,7 @@ class TopMenu extends Component{
                 mode="horizontal"
                 theme="dark">
                 {this.homeButton}
-                {this.busviz}
+                {this.edmviz}
        	    </Menu>
         );
     }
