@@ -14,13 +14,31 @@ import 'antd/dist/antd.css';
 
 const {Header, Content, Sider} = Layout;
 
+//<-----Access Settings------>
+const requestSettings = {
+    method: 'GET',
+    url: 'https://cors-anywhere.herokuapp.com/https://data.edmonton.ca/download/7qed-k2fc/application%2Foctet-stream',
+    encoding: null,
+    app_token: 'rCmWZj0urjkTW2OGXJeIga9kS',
+    header:'access-control-allow-origin'
+}
+
+const requestTripSettings = {
+    method: 'GET',
+    url:'https://data.edmonton.ca/resource/ctwr-tvrd.json?$select=trip_id,route_id&$order=route_id ',
+    app_token: 'rCmWZj0urjkTW2OGXJeIga9kS',
+    limit: 5000,
+}
+
+const gtfsrealtime = require('gtfs-realtime-bindings');
+const request = require('request');
+//<-------End of Access------->
+
 class App extends Component{
     constructor(props){
         super(props);
         this.state = {
 
-            busState: [],
-            busNumbers: {},
             edmontonCenter:[-113.5054,53.5372],
 
             showTest: false,
@@ -32,11 +50,11 @@ class App extends Component{
             checkedBoxes: [],
         }
     }
+
     menuKeys =  [];
+
     showPage = (next) => {
-        this.setState({showTest:false,showHome:false, showHouse:false,showBus:false});
-
-
+        this.setState({ showTest:false,showHome:false, showHouse:false,showBus:false});
         if (next === 'Test'){
             this.setState({showTest:true});
         } else if (next === 'Home'){
@@ -44,7 +62,9 @@ class App extends Component{
         } else if (next === 'House'){
             this.setState({showHouse:true});
         } else if (next === 'Bus'){
+            this.getBusContent();
             this.setState({showBus:true});
+
         }
 
         this.clearKeys();
@@ -72,35 +92,50 @@ class App extends Component{
     }
     //<---------------Start of Bus Methods ------------>
     getBusContent(){
-        let busData={};
-        let trips = [];
+        let busData=[];
+        // let busNumbers = this.getBusTrips();
+        // console.log(busNumbers);
         request(requestSettings, function(error, response, body){
             if (!error && response.statusCode === 200){
                 var feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
                 feed.entity.forEach(function(entity){
-                    trips.push(entity.vehicle.trip.tripId)
+                    let aBus = {};
+
+                    aBus['id'] = entity.id;
+                    aBus['tripId'] = entity.vehicle.trip.tripId;
+                    aBus['lat'] = entity.vehicle.position.latitude;
+                    aBus['long'] = entity.vehicle.position.longitude;
+
+                    try{aBus['speed'] = entity.vehicle.position.speed}
+                    catch(err){aBus['speed'] = 0}
+
+                    try{aBus['bearing'] = entity.vehicle.position.bearing}
+                    catch(err){aBus['bearing'] = null}
+
+                    // try{aBus['number'] = busNumbers[entity.vehicle.trip.tripId.toString()]}
+                    // catch(err){aBus['number'] = null}
+
+                    busData.push(aBus);
                 });
-                busData = feed;
             }
         });
-        this.getTrips(trips);
-        this.setState({busState:busData});
-
+        console.log('here is the edited data', busData);
+        return busData;
     }
 
-    getBusTrips(allowedTrips){
+    getBusTrips(){
         let tID_rID = {}
         request(requestTripSettings, function(error, response, body){
             if (!error && response.statusCode === 200){
                  let temp = JSON.parse(body);
                  temp.forEach(function(entity){
-                     if(entity.trip_id in allowedTrips){
-                         tID_rID[entity.trip_id] = entity.route_id;
-                     }
+
+                    tID_rID[entity.trip_id] = entity.route_id;
+
                  });
             }
         });
-        this.setState({busNumbers: tID_rID});
+        return tID_rID;
     }
     //<--------------------End of Bus Content--------------------->
     logo = (
@@ -118,7 +153,8 @@ class App extends Component{
        		} else if (this.state.showBus){
                    bodyContent = <BusMap
                                     center={this.state.edmontonCenter}
-                                    getContent={this.getBusContent}/>
+                                    getContent={this.getBusContent}
+                                    />
                } else if (this.state.showHouse){
                    bodyContent = <HousingMap />
                }

@@ -30,36 +30,61 @@ const request = require('request');
 class BusMap extends Component{
     constructor(props){
         super(props);
-
+    }
+    state = {
+        busData: []
     }
 
     componentWillMount(){
+        // this.tick = setInterval(this.getBusses(), 60000);
+        // setInterval(console.log('tick'), 1000);
 
+    }
+    componentDidUpdate(prevProps, nextProps){
+        console.log(prevProps.busState);
+        console.log(nextProps);
     }
 
     componentDidMount(){
     }
 
     componentWillUnmount(){
+        this.setState({busData:[]});
     }
 
-    render() {
-        const busLocations = this.state.busState.map((item) => {
-            return <Marker  coordinates={[item.vehicle.position.latitude,item.vehicle.position.longitude]}
-            anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
-        });
-        console.log(busLocations);
-
-        return (
-            <div>
-                <Map
+    getBusses(){
+        let busses = this.props.getContent();
+        this.setState({busData: busses});
+    }
+    contentd = (<Map
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
                     center={this.props.center}>
                     <div>
                     <Marker coordinates={[-113.5054,53.5372]} anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
                     </div>
+                </Map>)
+    render() {
+
+        const busLocations = this.state.busData.map((item, index) => {
+            return <Marker id={index} coordinates={[item.lat,item.long]}
+            anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
+        });
+        console.log(busLocations);
+
+
+        return (
+            <div>
+            <Map
+                    style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
+                    containerStyle={{ width: '85vw', height: '90vh'}}
+                    center={this.props.center}>
+                    <div>
+                    <Marker coordinates={[-113.5054,53.5372]} anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
+                    {busLocations}
+                    </div>
                 </Map>
+
             </div>
         );
         }
